@@ -1,0 +1,26 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <div class="jumbotron" style="margin-top: 30px">
+        <h2>
+            Всего отходов: <strong>@ViewBag.solved</strong>
+        </h2>
+        
+        <h3>В итоге получаем по заготовкам:</h3>
+        <p>@ViewData["T1"]</p>
+        <p>@ViewData["T2"]</p>
+        <p>@ViewData["T3"]</p>
+        <p>@ViewData["T4"]</p>
+        <p>@ViewData["T5"]</p>
+    </div>
+</body>
+</html>
