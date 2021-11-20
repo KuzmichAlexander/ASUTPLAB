@@ -18,7 +18,22 @@ namespace SolverASUTP.Models
         public int needT1 { get; set; }
         public int needT2 { get; set; }
         public int needT3 { get; set; }
+        public int T1zag1 { get; set; }
+        public int T1zag2 { get; set; }
+        public int T1zag3 { get; set; }
+        public int T1zag4 { get; set; }
+        public int T1zag5 { get; set; }
 
-        
+        public int T2zag1 { get; set; }
+        public int T2zag2 { get; set; }
+        public int T2zag3 { get; set; }
+        public int T2zag4 { get; set; }
+        public int T2zag5 { get; set; }
+
+        public int T3zag1 { get; set; }
+        public int T3zag2 { get; set; }
+        public int T3zag3 { get; set; }
+        public int T3zag4 { get; set; }
+        public int T3zag5 { get; set; }
     }
 }

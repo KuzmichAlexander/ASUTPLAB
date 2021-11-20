@@ -25,11 +25,22 @@ namespace SolverASUTP.Controllers
             Set users = new Set(Domain.IntegerNonnegative, "users");
 
             List<SolverRow> solverList = new List<SolverRow>();
-            solverList.Add(new SolverRow { xId = 1, Othod = 19, Itogo = 0, T1Zagotovok = 2, T2Zagotovok = 0, T3Zagotovok = 0 });
-            solverList.Add(new SolverRow { xId = 2, Othod = 10, Itogo = 0, T1Zagotovok = 1, T2Zagotovok = 1, T3Zagotovok = 0 });
-            solverList.Add(new SolverRow { xId = 3, Othod = 1, Itogo = 0, T1Zagotovok = 1, T2Zagotovok = 0, T3Zagotovok = 1 });
-            solverList.Add(new SolverRow { xId = 4, Othod = 1, Itogo = 0, T1Zagotovok = 0, T2Zagotovok = 2, T3Zagotovok = 0 });
-            solverList.Add(new SolverRow { xId = 5, Othod = 53, Itogo = 0, T1Zagotovok = 0, T2Zagotovok = 0, T3Zagotovok = 1 });
+            int othod1 = input.L - (input.T1S * input.T1zag1 + input.T2S * input.T2zag1 + input.T3S * input.T3zag1);
+            int othod2 = input.L - (input.T1S * input.T1zag2 + input.T2S * input.T2zag2 + input.T3S * input.T3zag2);
+            int othod3 = input.L - (input.T1S * input.T1zag3 + input.T2S * input.T2zag3 + input.T3S * input.T3zag3);
+            int othod4 = input.L - (input.T1S * input.T1zag4 + input.T2S * input.T2zag4 + input.T3S * input.T3zag4);
+            int othod5 = input.L - (input.T1S * input.T1zag5 + input.T2S * input.T2zag5 + input.T3S * input.T3zag5);
+            if (othod1 < 0 || othod2 < 0 || othod3 < 0 || othod4 < 0 || othod5 < 0)
+            {
+                ViewBag.error = "Значение отхода получилос отрицательным";
+                return View("Error");
+            }
+
+            solverList.Add(new SolverRow { xId = 1, Othod = othod1, Itogo = 0, T1Zagotovok = input.T1zag1, T2Zagotovok = input.T2zag1, T3Zagotovok = input.T3zag1 });
+            solverList.Add(new SolverRow { xId = 2, Othod = othod2, Itogo = 0, T1Zagotovok = input.T1zag2, T2Zagotovok = input.T2zag2, T3Zagotovok = input.T3zag2 });
+            solverList.Add(new SolverRow { xId = 3, Othod = othod3, Itogo = 0, T1Zagotovok = input.T1zag3, T2Zagotovok = input.T2zag3, T3Zagotovok = input.T3zag3 });
+            solverList.Add(new SolverRow { xId = 4, Othod = othod4, Itogo = 0, T1Zagotovok = input.T1zag4, T2Zagotovok = input.T2zag4, T3Zagotovok = input.T3zag4 });
+            solverList.Add(new SolverRow { xId = 5, Othod = othod5, Itogo = 0, T1Zagotovok = input.T1zag5, T2Zagotovok = input.T2zag5, T3Zagotovok = input.T3zag5 });
 
             Parameter ost = new Parameter(Domain.IntegerNonnegative, "Othod", users);
             ost.SetBinding(solverList, "Othod", "xId");
@@ -41,16 +52,6 @@ namespace SolverASUTP.Controllers
             Parameter T3Zagotovok = new Parameter(Domain.IntegerNonnegative, "T3Zagotovok", users);
             T3Zagotovok.SetBinding(solverList, "T3Zagotovok", "xId");
 
-            //Parameter x2 = new Parameter(Domain.RealNonnegative, "Koef", users);
-            //x2.SetBinding(solverList, "Ostatok", "xId");
-            //Parameter x3 = new Parameter(Domain.RealNonnegative, "Koef", users);
-            //x3.SetBinding(solverList, "Ostatok", "xId");
-            //Parameter x4 = new Parameter(Domain.RealNonnegative, "Koef", users);
-            //x4.SetBinding(solverList, "Ostatok", "xId");
-            //Parameter x5 = new Parameter(Domain.RealNonnegative, "Koef", users);
-            //x5.SetBinding(solverList, "Ostatok", "xId");
-
-            //model.AddParameters(x1, x2, x3, x4, x5);
             model.AddParameters(ost, T1Zagotovok, T2Zagotovok, T3Zagotovok);
 
             Decision choose = new Decision(Domain.IntegerNonnegative, "choose", users);
@@ -58,7 +59,6 @@ namespace SolverASUTP.Controllers
 
             model.AddGoal("goal", GoalKind.Minimize, Model.Sum(Model.ForEach(users, xId => choose[xId] * ost[xId])));
 
-            //ограничения
             int needT1 = input.N * input.T1Kol;
             int needT2 = input.N * input.T2Kol;
             int needT3 = input.N * input.T3Kol;
@@ -83,7 +83,8 @@ namespace SolverASUTP.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.solved = "Ошибка";
+                ViewBag.error = "Не получилось рассчитать целевую функцию";
+                return View("Error");
             }
 
             return View("Solved");
