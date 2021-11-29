@@ -26,3 +26,7 @@ textarea {
 .col_color {
     background-color: yellow;
 }
+
+.ct-label {
+    font-size: 24px;
+}

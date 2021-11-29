@@ -8,19 +8,76 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title></title>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.css">
+    <script src="//cdn.jsdelivr.net/chartist.js/latest/chartist.min.js"></script>
 </head>
 <body>
     <div class="jumbotron" style="margin-top: 30px">
         <h2>
             Всего отходов: <strong>@ViewBag.solved</strong>
         </h2>
-        
+
         <h3>В итоге получаем по заготовкам:</h3>
-        <p>@ViewData["T1"]</p>
-        <p>@ViewData["T2"]</p>
-        <p>@ViewData["T3"]</p>
-        <p>@ViewData["T4"]</p>
-        <p>@ViewData["T5"]</p>
+        <p>Значение X1: @ViewData["T1"]</p>
+        <p>Значение X2: @ViewData["T2"]</p>
+        <p>Значение X3: @ViewData["T3"]</p>
+        <p>Значение X4: @ViewData["T4"]</p>
+        <p>Значение X5: @ViewData["T5"]</p>
+        <div class="row">
+            <div class="col-lg-1">
+            </div>
+            <div class="col-lg-3">
+                <p>Отходы</p>
+            </div>
+            <div class="col-lg-1">
+                <p>X1</p>
+            </div>
+            <div class="col-lg-1">
+                <p>X2</p>
+            </div>
+            <div class="col-lg-1">
+                <p>X3</p>
+            </div>
+            <div class="col-lg-1">
+                <p>X4</p>
+            </div>
+            <div class="col-lg-1">
+                <p>X5 </p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-1">
+
+            </div>
+            <div class="col-lg-3">
+            </div>
+            <div class="col-lg-1">
+                <p>@ViewBag.othod1</p>
+            </div>
+            <div class="col-lg-1">
+                <p>@ViewBag.othod2</p>
+            </div>
+            <div class="col-lg-1">
+                <p>@ViewBag.othod3</p>
+            </div>
+            <div class="col-lg-1">
+                <p>@ViewBag.othod4</p>
+            </div>
+            <div class="col-lg-1">
+                <p>@ViewBag.othod5</p>
+            </div>
+        </div>
+        <div class="ct-chart" style="width:100%; height:400px"></div>
     </div>
+
 </body>
+<script>
+    var data = {
+        labels: ['X1/отход', 'X2/отход', 'X3/отход', 'X4/отход', 'X5/отход'],
+        series: [[`@ViewData["T1"]`, `@ViewData["T2"]`, `@ViewData["T3"]`,`@ViewData["T4"]`,`@ViewData["T5"]`], [`@ViewBag.othod1`, `@ViewBag.othod2`, `@ViewBag.othod3`, `@ViewBag.othod4`, `@ViewBag.othod5`]]
+    };
+
+    new Chartist.Bar('.ct-chart', data);
+</script>
 </html>

@@ -2,10 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.UI.WebControls;
 using Microsoft.SolverFoundation.Services;
 using Parameter = Microsoft.SolverFoundation.Services.Parameter;
 
@@ -75,10 +72,15 @@ namespace SolverASUTP.Controllers
 
                 for (int i = 0; i < solverList.Count; i++)
                 {
-                    ViewData["T" + solverList[i].xId] = "Значение X" + (i + 1).ToString() + ": " + choose.GetDouble(solverList[i].xId) + "\n";
-                    reportStr += "Значение X" + (i + 1).ToString() + ": " + choose.GetDouble(solverList[i].xId) + "\n";
+                    ViewData["T" + solverList[i].xId] = choose.GetDouble(solverList[i].xId);
+                    reportStr += "Значение X" + (i + 1).ToString() + ": " + choose.GetDouble(solverList[i].xId);
                 }
 
+                ViewBag.othod1 = othod1;
+                ViewBag.othod2 = othod2;
+                ViewBag.othod3 = othod3;
+                ViewBag.othod4 = othod4;
+                ViewBag.othod5 = othod5;
                 ViewBag.solved = solution.Goals.First();
             }
             catch (Exception ex)
